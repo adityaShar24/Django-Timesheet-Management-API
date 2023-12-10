@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TimesheetappConfig(AppConfig):
+class TimesheetAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'timesheetapp'
+    name = 'timesheet_app'
