@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from ..serializers.project_serializer import ProjectSerializer
 
 @api_view(['POST'])
-def creat_project(request):
+def create_project(request):
     serializer = ProjectSerializer(data= request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save()
