@@ -20,3 +20,10 @@ def update_project(request , pk):
         serializer.save()
         return Response(serializer.data , status=201)
     
+    
+@api_view(["GET"])
+def get_projects(request):
+    projects = Project.objects.all()
+    serializer = ProjectSerializer(projects , many=True)
+    return Response(serializer.data , status=200)
+    
