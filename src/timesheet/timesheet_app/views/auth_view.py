@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..serializers.user_serializer import UserSerializer
+from ..serializers.login_serializer import LoginSerializer
+
 from rest_framework_simplejwt.tokens import RefreshToken
 
 @api_view(['POST'])
@@ -19,14 +21,13 @@ def register_user(request):
     
 @api_view(['POST'])
 def login_user(request):
-    serializer = UserSerializer(data = request.data)
+    serializer = LoginSerializer(data = request.data)
     
     if serializer.is_valid(raise_exception=True):
-        email = serializer.data['email']
         password = serializer.data['password']
         username = serializer.data['username']
         
-        user = authenticate( request, email= email , password = password )
+        user = authenticate( request, username= username , password = password )
         
         if user is None:
             return Response({"message":{"error": "Invalid Credentials"}} , status=400)
