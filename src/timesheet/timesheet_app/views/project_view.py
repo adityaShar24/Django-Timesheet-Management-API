@@ -9,17 +9,18 @@ def create_project(request):
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response(serializer.data , status=201)
-    return Response(serializer.error_messages , status= 400)
+    return Response(serializer.errors , status= 400)
 
 @api_view(["PUT"])
-def update_project(request , pk):
+def update_project_detail(request , pk):
     project = Project.objects.get(id=pk)
     serializer = ProjectSerializer(instance=project , data=request.data)
     
     if serializer.is_valid(raise_exception=True):
         serializer.save()
         return Response(serializer.data , status=201)
-    
+    return Response(serializer.errors , status= 400)
+
     
 @api_view(["GET"])
 def get_projects(request):
@@ -29,7 +30,7 @@ def get_projects(request):
 
 
 @api_view(["GET"])
-def get_by_id(request , pk):
+def get_project_detail(request , pk):
     project = Project.objects.get(id=pk)
     serializer = ProjectSerializer(project)
     return Response(serializer.data , status=200)

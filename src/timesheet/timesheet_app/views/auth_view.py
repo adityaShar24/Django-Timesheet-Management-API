@@ -16,7 +16,7 @@ def register_user(request):
         user.save()
         return Response(serializer.data , status=201)
     
-    return Response(serializer.error_messages , status=400)
+    return Response(serializer.errors , status= 400)
     
     
 @api_view(['POST'])
@@ -41,5 +41,5 @@ def login_user(request):
             }
         )
     
-    return Response(serializer.error_messages , status=400)
+    return Response(serializer.errors , status= 400)
     
