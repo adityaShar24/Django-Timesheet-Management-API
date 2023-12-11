@@ -22,8 +22,14 @@ def update_project(request , pk):
     
     
 @api_view(["GET"])
-def get_projects(request):
+def get_projects():
     projects = Project.objects.all()
     serializer = ProjectSerializer(projects , many=True)
+    return Response(serializer.data , status=200)
+
+@api_view(["GET"])
+def get_by_id(pk):
+    project = Project.objects.get(id=pk)
+    serializer = ProjectSerializer(project)
     return Response(serializer.data , status=200)
     
