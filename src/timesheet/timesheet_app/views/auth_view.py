@@ -5,7 +5,7 @@ from ..serializers.user_serializer import UserSerializer
 from ..serializers.login_serializer import LoginSerializer
 from rest_framework.status import  HTTP_400_BAD_REQUEST , HTTP_201_CREATED
 from rest_framework_simplejwt.tokens import RefreshToken , AccessToken
-from ...utils.constants import USER_REGISTERED_MESSAGE , USER_LOGGEDIN_MESSAGE , INVAID_CREDENTIALS_MESSAGE
+from ..utils.constants import USER_REGISTERED_MESSAGE , USER_LOGGEDIN_MESSAGE , INVAID_CREDENTIALS_MESSAGE
 
 @api_view(['POST'])
 def register_user(request):
