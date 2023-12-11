@@ -2,14 +2,15 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..serializers.project_serializer import ProjectSerializer
 from ..models.project_model import Project
+from rest_framework.status import HTTP_200_OK , HTTP_400_BAD_REQUEST , HTTP_201_CREATED
 
 @api_view(['POST'])
 def create_project(request):
     serializer = ProjectSerializer(data= request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save()
-        return Response(serializer.data , status=201)
-    return Response(serializer.errors , status= 400)
+        return Response(serializer.data , status= HTTP_201_CREATED)
+    return Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
 
 @api_view(["PUT"])
 def update_project_detail(request , pk):
@@ -18,20 +19,20 @@ def update_project_detail(request , pk):
     
     if serializer.is_valid(raise_exception=True):
         serializer.save()
-        return Response(serializer.data , status=201)
-    return Response(serializer.errors , status= 400)
+        return Response(serializer.data , status= HTTP_201_CREATED)
+    return Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
 
     
 @api_view(["GET"])
 def get_projects(request):
     projects = Project.objects.all()
     serializer = ProjectSerializer(projects , many=True)
-    return Response(serializer.data , status=200)
+    return Response(serializer.data , status = HTTP_200_OK)
 
 
 @api_view(["GET"])
 def get_project_detail(request , pk):
     project = Project.objects.get(id=pk)
     serializer = ProjectSerializer(project)
-    return Response(serializer.data , status=200)
+    return Response(serializer.data , status = HTTP_200_OK)
     

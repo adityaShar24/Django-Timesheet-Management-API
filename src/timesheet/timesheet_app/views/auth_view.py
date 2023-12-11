@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from ..serializers.user_serializer import UserSerializer
 from ..serializers.login_serializer import LoginSerializer
-
+from rest_framework.status import  HTTP_400_BAD_REQUEST , HTTP_201_CREATED
 from rest_framework_simplejwt.tokens import RefreshToken
 
 @api_view(['POST'])
@@ -14,9 +14,9 @@ def register_user(request):
         user = serializer.save()
         user.set_password(serializer.validated_data['password'])
         user.save()
-        return Response(serializer.data , status=201)
+        return Response(serializer.data , status= HTTP_201_CREATED)
     
-    return Response(serializer.errors , status= 400)
+    return Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
     
     
 @api_view(['POST'])
@@ -30,7 +30,7 @@ def login_user(request):
         user = authenticate( request, username= username , password = password )
         
         if user is None:
-            return Response({"message":{"error": "Invalid Credentials"}} , status=400)
+            return Response({"message":{"error": "Invalid Credentials"}} , status= HTTP_400_BAD_REQUEST)
     
         refresh = RefreshToken.for_user(user)
 
@@ -41,5 +41,5 @@ def login_user(request):
             }
         )
     
-    return Response(serializer.errors , status= 400)
+    return Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
     
