@@ -7,6 +7,6 @@ urlpatterns = [
     path('auth/login/' , login_user , name='login_user' ),
     path('project/create/' , create_project , name = 'create_project'),
     path('project/update/<str:pk>' , update_project_detail , name = 'update_project_detail'),
-    path('project/get_all/' , get_projects , name = 'get_all_project'),
-    path('project/get_by_id/<str:pk>' , get_project_detail , name = 'get_project_detail'),
+    path('project/get-all/' , get_projects , name = 'get_all_project'),
+    path('project/get_project_detail/<str:pk>' , get_project_detail , name = 'get_project_detail'),
 ] 
