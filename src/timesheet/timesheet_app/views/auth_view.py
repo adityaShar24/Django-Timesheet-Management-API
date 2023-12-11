@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from ..serializers.user_serializer import UserSerializer
 from ..serializers.login_serializer import LoginSerializer
 from rest_framework.status import  HTTP_400_BAD_REQUEST , HTTP_201_CREATED
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken , AccessToken
 
 @api_view(['POST'])
 def register_user(request):
@@ -33,11 +33,12 @@ def login_user(request):
             return Response({"message":{"error": "Invalid Credentials"}} , status= HTTP_400_BAD_REQUEST)
     
         refresh = RefreshToken.for_user(user)
+        access = AccessToken.for_user(user)
 
         return Response(
             {
                 'refresh': str(refresh),
-                'access': str(refresh.access_token)
+                'access': str(access)
             }
         )
     
