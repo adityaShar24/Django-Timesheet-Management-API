@@ -5,7 +5,6 @@ from ..models.project_model import Project
 from rest_framework.status import HTTP_200_OK , HTTP_400_BAD_REQUEST , HTTP_201_CREATED
 from rest_framework.permissions import IsAuthenticated
 
-
 @api_view(['POST'])
 def create_project(request):
     serializer = ProjectSerializer(data= request.data)
