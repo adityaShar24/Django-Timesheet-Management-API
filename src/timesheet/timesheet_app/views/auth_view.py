@@ -24,8 +24,9 @@ def login_user(request):
     if serializer.is_valid(raise_exception=True):
         email = serializer.data['email']
         password = serializer.data['password']
+        username = serializer.data['username']
         
-        user = authenticate(email , password)
+        user = authenticate( request, email= email , password = password )
         
         if user is None:
             return Response({"message":{"error": "Invalid Credentials"}} , status=400)
