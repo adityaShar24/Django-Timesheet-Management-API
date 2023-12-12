@@ -54,6 +54,7 @@ def login_user(request):
     
 
 @api_view(['POST'])
+# Whether to send token in headers or body?????
 def logout_user(request):
     refresh_token = request.data.get('refresh_token')
 
