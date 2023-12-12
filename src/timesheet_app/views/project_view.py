@@ -8,9 +8,10 @@ from ..utils.constants import PROJECT_CREATED_MESSAGE , PROJECT_UPDATED_MESSAGE 
 
 @api_view(['POST'])
 def create_project(request):
-    
+    response = None
     serializer = ProjectSerializer(data= request.data)
-    if serializer.is_valid(raise_exception=True):
+
+    if serializer.is_valid():
         serializer.save()
         
         response_data = {
@@ -18,42 +19,69 @@ def create_project(request):
             "data": serializer.data
         }
         
-        return Response(response_data , status= HTTP_201_CREATED)
-    return Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
+        response = Response(response_data , status= HTTP_201_CREATED)
+    else:
+        response = Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
+    
+    return response
 
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def update_project_detail(request , pk):
+    response = None
+
     project = Project.objects.get(id=pk)
     serializer = ProjectSerializer(instance=project , data=request.data)
     
-    if serializer.is_valid(raise_exception=True):
+    if serializer.is_valid():
         serializer.save()
         
         response_data = {
             "message": PROJECT_UPDATED_MESSAGE,
             "data": serializer.data
         }
-        return Response(response_data , status= HTTP_201_CREATED)
-    return Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
 
+        response =  Response(response_data , status= HTTP_201_CREATED)
+    else:
+        response = Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
+        
+    return response
     
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_projects(request):
+    response = None
+    
     projects = Project.objects.all()
     serializer = ProjectSerializer(projects , many=True)
-    return Response(
-        {"message": ALL_PROJECTS_FETCHED_MESSAGE,
-        "data": serializer.data} , status = HTTP_200_OK )
+    
+    data = {
+        "message": ALL_PROJECTS_FETCHED_MESSAGE,
+        "data": serializer.data
+    }
+    
+    response = Response(data , status= HTTP_200_OK )
+    return response  
 
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_project_detail(request , pk):
+    response = None
+    
     project = Project.objects.get(id=pk)
     serializer = ProjectSerializer(project)
-    return Response(
-        {"message": DETAILED_PROJECTS_FETCHED_MESSAGE,
-        "data": serializer.data} , status = HTTP_200_OK )
     
+    if not serializer.is_valid():
+        response = Response(serializer.errors , status= HTTP_400_BAD_REQUEST)   
+    elif not project:
+        response = Response({"message": "Project not found"} , status= HTTP_400_BAD_REQUEST)
+    else:
+        data = {
+            "message": DETAILED_PROJECTS_FETCHED_MESSAGE,
+            "data": serializer.data
+        }
+        
+        response = Response(data , status = HTTP_200_OK )  
+
+    return response    

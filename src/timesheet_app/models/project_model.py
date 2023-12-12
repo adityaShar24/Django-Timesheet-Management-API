@@ -1,6 +1,7 @@
 from django.db import models
 
 class Project(models.Model):
+    # can also add client name.
     project_name = models.CharField(max_length=100)
     description = models.TextField(max_length=255)
     start_date = models.DateField(null=True , blank=True)
