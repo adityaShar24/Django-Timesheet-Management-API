@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view , permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK
 from ..serializers.timesheet_serializer import TimesheetSerializer
 from ..models.timesheet_model import Timesheet
 
@@ -68,3 +68,44 @@ def update_timesheet(request , pk):
             response = Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
         
     return response
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def list_all_timesheets(request):
+    response = None
+
+    timesheets = Timesheet.objects.filter(user= request.user.id)
+    serializer = TimesheetSerializer(instance= timesheets , many=True)    
+    
+    data = {
+        "message": "All timesheets fetched successfully",
+        "data": serializer.data
+    }
+    
+    response = Response(data , status= HTTP_200_OK)
+    return response
+    
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_by_id(request , pk):
+    response = None
+    
+    timesheet = Timesheet.objects.get(id = pk)
+    
+    if timesheet.user.id != request.user.id:
+        response = {
+                "message": "You don't have permission to update this timesheet"
+            }
+    else:
+        serializer = TimesheetSerializer(instance= timesheet)
+        
+        data = {
+            "message": "Timesheet fetched successfully",
+            "data": serializer.data
+        }
+        
+        response = Response(data , status= HTTP_200_OK)
+
+    return response
+    
