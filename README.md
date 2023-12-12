@@ -6,54 +6,16 @@ The objective of this assignment is to evaluate your proficiency in Django and D
 
 ## 🎯Features 
 
-### Authentication and User Management
+- **JWT Authentication:** Jsonwebtokens are used for user authentication, ensuring secure access to protected routes.
 
-#### 1. User Registration (`register_user`)
+-**Authorization:** All types of requests are authorized to ensure only authenticated users can access the services.
 
-- **Objective:** Allows new users to register by providing necessary information.
-- **Implementation:** Utilizes the `UserSerializer` for data validation and creates a new user upon successful validation. The user's password is securely set and saved.
-- **Response:** Returns a success message and the registered user's data upon successful registration.
+-**Projects Mangement** The Projects Management API provides endpoints for creating, updating, and listing projects. Authenticated users can create and modify projects using the `POST` and `PUT` requests, respectively, while the `GET` endpoint allows them to retrieve a list of all projects or detailed information about a specific project using its primary key (`pk`).
 
-#### 2. User Login (`login_user`)
+**Timesheet Management:** The Timesheet Management API enables users to create, update, and retrieve timesheets. Authenticated users can create timesheets using a `POST` request, update their own timesheets with a `PUT` request, and retrieve a list of all their timesheets or details of a specific timesheet using the respective `GET` endpoints. Permissions are enforced to ensure users can only modify their own timesheets.
 
-- **Objective:** Authenticates users based on provided credentials (username and password).
-- **Implementation:** Uses the `LoginSerializer` for data validation and authenticates the user using Django's `authenticate` function. Generates JWT tokens (access and refresh) upon successful authentication.
-- **Response:** Returns a success message with the user's username, along with the generated access and refresh tokens.
 
-#### 3. User Logout (`logout_user`)
-
-- **Objective:** Logs out users by blacklisting the provided refresh token.
-- **Implementation:** Extracts the refresh token from the request headers and blacklists it using the RefreshToken class. Performs a logout operation.
-- **Response:** Returns a success message upon successful logout, or an error message if the refresh token is missing or invalid.
-
--**Note:** All API endpoints are decorated with @api_view(['POST']) to ensure they accept only POST requests, which is a common practice for authentication-related operations. Proper HTTP status codes are used for different scenarios (success, bad request, unauthorized), providing clarity in the response.
-
-  
-### Authentication and User Management
-
-#### 1.Create Project (`create_project`)
-
-- **Objective:** Allows authenticated users to create a new project by providing project details.
-- **Implementation:** Utilizes the `ProjectSerializer` for data validation and creates a new project upon successful validation.
-- **Response:** Returns a success message and the created project's data upon successful creation. If validation fails, returns a bad request with validation errors.
-
-#### 2. Update Project Details(`update_project_detail`)
-
-- **Objective:** Allows authenticated users to update the details of an existing project identified by its primary key (`pk`).
-- **Implementation:** Retrieves the existing project based on the provided primary key, validates the updated data using the `ProjectSerializer`, and saves the changes.
-- **Response:**  Returns a success message and the updated project's data upon successful update. If validation fails or the project does not exist, returns a bad request with relevant errors.
-
-#### 3. Get All Projects(`get_projects`)
-
-- **Objective:** Allows authenticated users to retrieve a list of all projects.
-- **Implementation:** Retrieves all projects from the database, serializes the data using `ProjectSerializer`, and returns the list of projects.
-- **Response:**   Returns a success message and the data containing all projects upon successful retrieval.
-
-#### 4. Get Project Detail(`get_project_detail`)
-
-- **Objective:**  Allows authenticated users to retrieve details of a specific project identified by its primary key (`pk`).
-- **Implementation:** Retrieves the project based on the provided primary key, serializes the data using `ProjectSerializer`, and returns the project details.
-- **Response:**   Returns a success message and the data containing detailed information about the specified project upon successful retrieval. If the project does not exist, returns a bad request with relevant errors.
+**User Management:** The User Authentication API facilitates user registration, login, and logout functionalities. Users can register by sending a `POST` request to the registration endpoint, log in using valid credentials through the login endpoint, and log out with a valid refresh token via the logout endpoint. JSON Web Tokens (JWT) are used for secure authentication and authorization.
 
 - **Note:** Note:
 All endpoints are decorated with @api_view(["POST"]) and @permission_classes([IsAuthenticated]) to ensure authentication and the use of proper HTTP methods.
@@ -109,7 +71,7 @@ The ProjectSerializer is utilized for data validation and serialization, promoti
     ```shell
     python manage.py runserver    
 
-## Usage 📌
+
 
 
 
