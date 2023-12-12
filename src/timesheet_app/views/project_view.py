@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from ..utils.constants import PROJECT_CREATED_MESSAGE , PROJECT_UPDATED_MESSAGE , ALL_PROJECTS_FETCHED_MESSAGE , DETAILED_PROJECTS_FETCHED_MESSAGE
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def create_project(request):
     response = None
     serializer = ProjectSerializer(data= request.data)
