@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK , HTTP_403_FORBIDDEN
 from ..serializers.timesheet_serializer import TimesheetSerializer
 from ..models.timesheet_model import Timesheet
+from ..utils.constants import PERMISSION_DENIED_MESSAGE  , TIMESHEET_CREATED_SUCCESS_MESSAGE , TIMESHEET_UPDATE_SUCCESS_MESSAGE , ALL_TIMESHEETS_FETCHED_SUCCESS_MESSAGE , TIMESHEET_FETCHED_SUCCESS_MESSAGE
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
@@ -23,7 +24,7 @@ def create_timesheet(request):
         serializer.save()
         
         response_data = {
-            "message": "Timesheet created successfully",
+            "message": TIMESHEET_CREATED_SUCCESS_MESSAGE ,
             "data": serializer.data
         }
         
@@ -41,7 +42,7 @@ def update_timesheet(request , pk):
 
     if timesheet.user.id != request.user.id:
         response_data = {
-            "message": "You don't have permission to update this timesheet"
+            "message": PERMISSION_DENIED_MESSAGE
         }
         
         response = Response(response_data , status= HTTP_403_FORBIDDEN)
@@ -58,8 +59,8 @@ def update_timesheet(request , pk):
         if serializer.is_valid():
             serializer.save()
         
-            response_data = {
-                "message": "Timesheet updated successfully",
+            response_data = { 
+                "message": TIMESHEET_UPDATE_SUCCESS_MESSAGE ,
                 "data": serializer.data
             }
         
@@ -79,7 +80,7 @@ def list_all_timesheets(request):
     serializer = TimesheetSerializer(instance= timesheets , many=True)    
     
     data = {
-        "message": "All timesheets fetched successfully",
+        "message": ALL_TIMESHEETS_FETCHED_SUCCESS_MESSAGE,
         "data": serializer.data
     }
     
@@ -95,13 +96,13 @@ def get_by_id(request , pk):
     
     if timesheet.user.id != request.user.id:
         response = {
-                "message": "You don't have permission to update this timesheet"
+                "message": PERMISSION_DENIED_MESSAGE
             }
     else:
         serializer = TimesheetSerializer(instance= timesheet)
         
         data = {
-            "message": "Timesheet fetched successfully",
+            "message": TIMESHEET_FETCHED_SUCCESS_MESSAGE,
             "data": serializer.data
         }
         
