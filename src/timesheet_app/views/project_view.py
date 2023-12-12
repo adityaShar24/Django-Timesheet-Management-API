@@ -73,16 +73,11 @@ def get_project_detail(request , pk):
     project = Project.objects.get(id=pk)
     serializer = ProjectSerializer(project)
     
-    if not serializer.is_valid():
-        response = Response(serializer.errors , status= HTTP_400_BAD_REQUEST)   
-    elif not project:
-        response = Response({"message": "Project not found"} , status= HTTP_400_BAD_REQUEST)
-    else:
-        data = {
-            "message": DETAILED_PROJECTS_FETCHED_MESSAGE,
-            "data": serializer.data
-        }
+    data = {
+        "message": DETAILED_PROJECTS_FETCHED_MESSAGE,
+        "data": serializer.data
+    }
         
-        response = Response(data , status = HTTP_200_OK )  
+    response = Response(data , status = HTTP_200_OK )  
 
     return response    

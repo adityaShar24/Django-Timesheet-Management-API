@@ -5,13 +5,15 @@ from ..serializers.user_serializer import UserSerializer
 from ..serializers.login_serializer import LoginSerializer
 from rest_framework.status import  HTTP_400_BAD_REQUEST , HTTP_201_CREATED , HTTP_200_OK , HTTP_401_UNAUTHORIZED
 from rest_framework_simplejwt.tokens import RefreshToken , AccessToken
-from ..utils.constants import USER_REGISTERED_MESSAGE , USER_LOGGEDIN_MESSAGE , INVAID_CREDENTIALS_MESSAGE , USER_LOGGEDOUT_MESSAGE
+from ..utils.constants import USER_REGISTERED_MESSAGE , USER_LOGGEDIN_MESSAGE , INVAID_CREDENTIALS_MESSAGE , USER_LOGGEDOUT_MESSAGE , REFRESH_TOKEN_REQUIRED_MESSAGE
 
 @api_view(['POST'])
 def register_user(request):
+    response = None
+    
     serializer = UserSerializer(data = request.data)
     
-    if serializer.is_valid(raise_exception=True): 
+    if serializer.is_valid(): 
         user = serializer.save()
         user.set_password(serializer.validated_data['password'])
         user.save()
@@ -21,28 +23,32 @@ def register_user(request):
             "data" : serializer.data
         }
         
-        return Response( response_data , status= HTTP_201_CREATED)
+        response = Response( response_data , status= HTTP_201_CREATED)
+    else:
+        response = Response(serializer.errors , status= HTTP_400_BAD_REQUEST) 
     
-    return Response(serializer.errors , status= HTTP_400_BAD_REQUEST)
+    return response
     
     
 @api_view(['POST'])
 def login_user(request):
+    response = None
+    
     serializer = LoginSerializer(data = request.data)
     
-    if serializer.is_valid(raise_exception=True):
+    if serializer.is_valid():
         password = serializer.data['password']
         username = serializer.data['username']
         
         user = authenticate( request, username= username , password = password )
         
         if user is None:
-            return Response({"message": INVAID_CREDENTIALS_MESSAGE } , status= HTTP_400_BAD_REQUEST)
+            response = Response({"message": INVAID_CREDENTIALS_MESSAGE } , status= HTTP_400_BAD_REQUEST)
     
         refresh = RefreshToken.for_user(user)
         access = AccessToken.for_user(user)
 
-        return Response(
+        response =  Response(
             {
                 'message': USER_LOGGEDIN_MESSAGE.format(username = username) ,
                 'refresh': str(refresh),
@@ -50,20 +56,25 @@ def login_user(request):
             }
         )
     
-    return Response( serializer.errors , status= HTTP_400_BAD_REQUEST)
+    else:
+        response = Response( serializer.errors , status= HTTP_400_BAD_REQUEST)
+        
+    return response 
     
 
 @api_view(['POST'])
-# Whether to send token in headers or body?????
 def logout_user(request):
-    refresh_token = request.data.get('refresh_token')
+    response= None
+    
+    refresh_token= request.headers.get('refresh_token')
 
     if not refresh_token:
-        return Response({"error": "Refresh token is required."}, status= HTTP_401_UNAUTHORIZED)
+        response = Response({"message": REFRESH_TOKEN_REQUIRED_MESSAGE}, status= HTTP_401_UNAUTHORIZED)
 
     try:
         RefreshToken(refresh_token).blacklist()
         logout(request)
-        return Response({"message": USER_LOGGEDOUT_MESSAGE}, status= HTTP_200_OK)
+        response = Response({"message": USER_LOGGEDOUT_MESSAGE}, status= HTTP_200_OK)
     except Exception as e:
-        return Response({"error": str(e)}, status= HTTP_401_UNAUTHORIZED)
+        response = Response({"error": str(e)}, status= HTTP_401_UNAUTHORIZED)
+    return response

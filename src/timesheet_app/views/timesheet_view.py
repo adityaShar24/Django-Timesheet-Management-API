@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view , permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK , HTTP_403_FORBIDDEN
 from ..serializers.timesheet_serializer import TimesheetSerializer
 from ..models.timesheet_model import Timesheet
 
@@ -44,7 +44,7 @@ def update_timesheet(request , pk):
             "message": "You don't have permission to update this timesheet"
         }
         
-        response = Response(response_data , status= HTTP_400_BAD_REQUEST)
+        response = Response(response_data , status= HTTP_403_FORBIDDEN)
     else:
         data = {
             "projects": request.data.get("projects"),

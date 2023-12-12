@@ -8,3 +8,5 @@ PROJECT_CREATED_MESSAGE = 'project has been created successfully!'
 PROJECT_UPDATED_MESSAGE = 'project has been updated successfully!'
 ALL_PROJECTS_FETCHED_MESSAGE = 'all projects have been fetched successfully!'
 DETAILED_PROJECTS_FETCHED_MESSAGE = 'project has been fetched successfully!'
+
+REFRESH_TOKEN_REQUIRED_MESSAGE = "Refresh token is required."
