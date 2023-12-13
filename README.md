@@ -1,9 +1,5 @@
 # varsity-pro-assignment
 
-The objective of this assignment is to evaluate your proficiency in Django and Django Rest Framework (DRF) for building a Timesheet Software. The software should allow users to log their working hours for selected projects on a weekly basis.
-
-
-
 ## 🎯Features 
 
 - **JWT Authentication:** Jsonwebtokens are used for user authentication, ensuring secure access to protected routes.
