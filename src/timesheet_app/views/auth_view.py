@@ -64,17 +64,17 @@ def login_user(request):
 
 @api_view(['POST'])
 def logout_user(request):
-    response= None
+    response = None
     
-    refresh_token= request.headers.get('refresh_token')
+    refresh_token = request.data.get('refresh_token')  # Use request.data to get the token from the request body
 
     if not refresh_token:
-        response = Response({"message": REFRESH_TOKEN_REQUIRED_MESSAGE}, status= HTTP_401_UNAUTHORIZED)
+        response = Response({"message": "Refresh token is required."}, status=HTTP_401_UNAUTHORIZED)
 
     try:
         RefreshToken(refresh_token).blacklist()
-        logout(request)
-        response = Response({"message": USER_LOGGEDOUT_MESSAGE}, status= HTTP_200_OK)
+        response = Response({"message": "User logged out successfully."}, status=HTTP_200_OK)
     except Exception as e:
-        response = Response({"error": str(e)}, status= HTTP_401_UNAUTHORIZED)
+        response = Response({"error": str(e)}, status=HTTP_401_UNAUTHORIZED)
+
     return response
