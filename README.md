@@ -17,7 +17,7 @@
 All endpoints are decorated with @api_view(["POST"]) and @permission_classes([IsAuthenticated]) to ensure authentication and the use of proper HTTP methods.
 HTTP status codes are appropriately used to indicate the outcome of each operation (e.g., HTTP_201_CREATED for successful creations, HTTP_400_BAD_REQUEST for validation errors).
 Proper naming conventions and modularization have been applied to keep the code organized and readable.
-The ProjectSerializer is utilized for data validation and serialization, promoting code reusability and maintaining consistency.
+All Serializers are utilized for data validation and serialization, promoting code reusability and maintaining consistency.
 
 
 ## 🚀Technologies Used 
