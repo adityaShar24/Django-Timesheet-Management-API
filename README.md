@@ -2,7 +2,7 @@
 
 ## 🎯Features 
 
-- **JWT Authentication:** Jsonwebtokens are used for user authentication, ensuring secure access to protected routes.
+- **Token-Based Authentication:** Users receive and use unique tokens to securely access and authenticate with API endpoints..
 
 - **Authorization:** All types of requests are authorized to ensure only authenticated users can access the services.
 
