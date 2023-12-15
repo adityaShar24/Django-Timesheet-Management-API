@@ -68,9 +68,6 @@ All Serializers are utilized for data validation and serialization, promoting co
     python manage.py runserver    
 
 
-
-
-
 ## Contributing 🤝
 
 Feel free to contribute to enhance the functionality of Todo-Application. Follow the [contribution guidelines](CONTRIBUTING.md) for more details.
