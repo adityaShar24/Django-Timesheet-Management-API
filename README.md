@@ -1,4 +1,4 @@
-# varsity-pro-assignment
+# Django-Timesheet-Api
 
 ## 🎯Features 
 
