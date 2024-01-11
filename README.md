@@ -30,7 +30,7 @@ All Serializers are utilized for data validation and serialization, promoting co
 
 1. **Clone the Repository:**
    ```shell
-   git clone https://github.com/adityaShar24/varsity-pro-assignment.git
+   git clone https://github.com/adityaShar24/Django-Timesheet-Management-API.git
 
 2. **Navigate to the project directory:**
    ```shell
