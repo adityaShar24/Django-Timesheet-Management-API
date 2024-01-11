@@ -10,7 +10,6 @@
 
 - **Timesheet Management:** The Timesheet Management API enables users to create, update, and retrieve timesheets. Authenticated users can create timesheets using a `POST` request, update their own timesheets with a `PUT` request, and retrieve a list of all their timesheets or details of a specific timesheet using the respective `GET` endpoints. Permissions are enforced to ensure users can only modify their own timesheets and on weekly basis.
 
-
 - **User Management:** The User Authentication API facilitates user registration, login, and logout functionalities. Users can register by sending a `POST` request to the registration endpoint, log in using valid credentials through the login endpoint, and log out with a valid refresh token via the logout endpoint. JSON Web Tokens (JWT) are used for secure authentication and authorization.
 
 - **Note:** Note:
@@ -74,7 +73,7 @@ Feel free to contribute to enhance the functionality of Todo-Application. Follow
 
 ## License 📄
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/adityaShar24/varsity-pro-assignment/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/adityaShar24/Django-Timesheet-Management-API/blob/main/LICENSE) file for details.
 
 ## Acknowledgments 🙏
 
