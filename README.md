@@ -8,7 +8,7 @@
 
 - **Projects Mangement** The Projects Management API provides endpoints for creating, updating, and listing projects. Authenticated users can create and modify projects using the `POST` and `PUT` requests, respectively, while the `GET` endpoint allows them to retrieve a list of all projects or detailed information about a specific project using its primary key (`pk`).
 
-- **Timesheet Management:** The Timesheet Management API enables users to create, update, and retrieve timesheets. Authenticated users can create timesheets using a `POST` request, update their own timesheets with a `PUT` request, and retrieve a list of all their timesheets or details of a specific timesheet using the respective `GET` endpoints. Permissions are enforced to ensure users can only modify their own timesheets and on weekly basis.
+- **Timesheet Management:** The Timesheet Management API enables users to create, update, and retrieve timesheets. Authenticated users can create timesheets using a `POST` request, update their own timesheets with a `PUT` request, and retrieve a list of all their timesheets or details of a specific timesheet using the respective `GET` endpoints. **Permissions are enforced to ensure users can only modify their own timesheets and on weekly basis.**
 
 - **User Management:** The User Authentication API facilitates user registration, login, and logout functionalities. Users can register by sending a `POST` request to the registration endpoint, log in using valid credentials through the login endpoint, and log out with a valid refresh token via the logout endpoint. JSON Web Tokens (JWT) are used for secure authentication and authorization.
 
