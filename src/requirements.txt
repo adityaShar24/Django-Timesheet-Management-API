@@ -2,3 +2,5 @@ django
 djangorestframework
 pyyaml
 requests
+djangorestframework-simplejwt
+tzdata
